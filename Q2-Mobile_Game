@@ -1,0 +1,33 @@
+import fileinput
+
+
+T = 1
+lines = []
+with fileinput.input(files='input.txt') as f:
+   for line in f:
+       new_list = [int(elem) for elem in line.split()]
+       lines.append(new_list)
+
+
+for test_case in range(T):
+   N, A, B = lines[test_case * 2][0], lines[test_case * 2][1], lines[test_case * 2][2]
+   enemy_lvl = lines[test_case * 2 + 1]
+   x = 0
+   t = []
+   count = 0
+   for x in range(N):
+       if A >= B:
+           break
+       t = []
+       for i in range(N):
+           if enemy_lvl[i] < A:
+               t.append(enemy_lvl[i])
+       if len(t) == 0:
+           break
+       A += max(t)
+       count += 1
+       enemy_lvl[enemy_lvl.index(max(t))] = 0
+   if A >= B:
+       print(count)
+   else:
+       print(-1)
