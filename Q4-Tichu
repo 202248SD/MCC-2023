@@ -1,0 +1,34 @@
+import sys
+
+n = 100000
+k_ = 31337
+cards = list(map(int, input().split()))
+cards = list(set(cards))
+cards.sort()
+k = []
+
+
+for i in range(len(cards)-1):
+   k_needed = cards[i+1] - cards[i] - 1
+   k.append(k_needed)
+
+
+k_left = k_
+max_size = -999
+for i in range(len(cards)-1):
+   pointer = i
+   k_left = k_
+   size = 0
+   while k_left > 0 and pointer < len(cards)-1:
+       if k[pointer] != 0:
+           if k_left < k[pointer]:
+               size += k_left + 1
+               break
+           else:
+               k_left -= k[pointer]
+               size += k[pointer]
+       size += 1
+       pointer += 1
+   if size > max_size:
+       max_size = size
+print(max_size)
