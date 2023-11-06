@@ -1,0 +1,48 @@
+import sys
+
+n = 20000
+m = 12420
+out = 0
+x = []
+with fileinput.input(files='input.txt') as f:
+   for line in f:
+       new_list = [int(elem) for elem in line.split()]
+       x.append(new_list)
+a = []
+b = []
+t = []
+for i in x:
+   a.append(i[0]+i[1])
+for i in x:
+   b.append(i[2]+i[3])
+for i in x:
+   t.append(sum(i))
+
+
+a_max = []
+t_max = []
+ai = []
+ti = []
+x = []
+for i in range(m):
+   a_max.append(max(a))
+   ai.append(a.index(max(a)))
+   a[a.index(max(a))] = 0
+
+
+   t_max.append(max(t))
+   ti.append(t.index(max(t)))
+   t[t.index(max(t))] = 0
+tot = sum(a_max)
+last = a_max[len(a_max)-1]
+for i in range(m):
+   temp = tot + t_max[i]
+   if ti[i] in ai:
+       index = ai.index(ti[i])
+       temp -= a_max[index]
+   else:
+       temp -= last
+   x.append(temp)
+
+
+print(max(x))
